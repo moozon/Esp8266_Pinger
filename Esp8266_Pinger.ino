@@ -117,8 +117,8 @@ void myDelay(callbackFunction function, uint16_t delay = 1000, bool stopAnother 
 // EEPROM
 int addrEEPROM = 0;
 byte valEEPROM = 0;
-uint8_t sizeSSID_EEPROM = 20;
-uint8_t sizePass_EEPROM = 10;
+uint8_t sizeSSID_EEPROM = 21;
+uint8_t sizePass_EEPROM = 11;
 uint8_t sizeSSIDAdr_EEPROM = 50;
 uint8_t sizePassAdr_EEPROM = 51;
 
@@ -141,13 +141,12 @@ void setup()
 	// EEPROM Setup
 	EEPROM.begin(512);
 	
-	EEPROM.put(addrEEPROM, ssid);
-	EEPROM.put(addrEEPROM + sizeof(ssid), pass);
+	//EEPROM.put(addrEEPROM, ssid);
+	//EEPROM.put((addrEEPROM + sizeof(ssid)), pass);
+	//Serial.println("write");
 
-	Serial.println("write");
-
-	uint8_t ssidEEPROM[16] = { 0 };
-	uint8_t passEEPROM[16] = { 0 };
+	//uint8_t ssidEEPROM[16] = { 0 };
+	//uint8_t passEEPROM[16] = { 0 };
 
 	//for (size_t i = 0; i < sizeSSID_EEPROM - 1; i++)
 	//{
@@ -158,22 +157,22 @@ void setup()
 	//	//ssidEEPROM[i] = EEPROM.read(addrEEPROM);
 	//	
 	//}
-	
+	Serial.println(ssid);
 	EEPROM.get(addrEEPROM, ssid);
 	Serial.println(ssid);
-	EEPROM.get(sizeSSIDAdr_EEPROM, sizeSSID_EEPROM);
-	EEPROM.get(sizePassAdr_EEPROM, sizePass_EEPROM);
-	for (uint8_t i = sizeof(ssid) - 1; i > sizeSSID_EEPROM - 1; i--)
+	//EEPROM.get(sizeSSIDAdr_EEPROM, sizeSSID_EEPROM);
+	//EEPROM.get(sizePassAdr_EEPROM, sizePass_EEPROM);
+	/*for (uint8_t i = sizeof(ssid) - 1; i > sizeSSID_EEPROM - 1; i--)
 	{
 		ssid[i] = 0;
-	}
+	}*/
 
 	EEPROM.get(addrEEPROM + sizeSSID_EEPROM, pass);
 	Serial.println(pass);
-	for (uint8_t i = sizeof(pass) - 1; i > sizePass_EEPROM - 1; i--)
+	/*for (uint8_t i = sizeof(pass) - 1; i > sizePass_EEPROM - 1; i--)
 	{
 		pass[i] = 0;
-	}
+	}*/
 
 	Serial.println("read");
 	Serial.println(ssid);
@@ -227,7 +226,7 @@ void setup()
 					EEPROM.put(sizeSSIDAdr_EEPROM, sizeSSID_EEPROM);
 					EEPROM.put(addrEEPROM + sizeSSID_EEPROM, pass);
 					EEPROM.put(sizePassAdr_EEPROM, sizePass_EEPROM);
-					//EEPROM.commit();
+					EEPROM.commit();
 					//EEPROM.end();
 					
 					break;
